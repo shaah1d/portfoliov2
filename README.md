@@ -34,7 +34,7 @@ You can check the live demo of this website [dev.gxuri.in](https://dev.gxuri.in)
 
 ```bash
 # fork the repo & clone it
-git clone https://github.com/your-username/rdsx.dev
+git clone https://github.com/gurvinder-singh02/dev.gxuri.in
 
 # install dependencies
 bun install

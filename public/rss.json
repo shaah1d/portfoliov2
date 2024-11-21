@@ -1,5 +1,9 @@
 {
     "version": "https://jsonfeed.org/version/1",
-    "title": "Blogs"
-   
+    "title": "Blogs",
+    "home_page_url": "https://dev.gxuri.in",
+    "feed_url": "https://dev.gxuri.in/rss.json",
+    "description": "Hey! I am Gxuri, and its my personal blog where I share my learnings, experiences, and thoughts on different topics. I mostly talk about tech, but I don't have any specific niche.  I write about whatever I find interesting. I hope you will find my blogs helpful. Happy reading!",
+    "icon": "https://dev.gxuri.in/logo.png",
+    "items": []
 }

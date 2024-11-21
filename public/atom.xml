@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    
+    <id>https://dev.gxuri.in</id>
+    <title>Blogs</title>
+    <updated>2024-11-21T22:42:12.240Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://dev.gxuri.in"/>
+    <link rel="self" href="https://dev.gxuri.in/atom.xml"/>
+    <subtitle>Hey! I am RDS (Rudro Dip Sarker), and its my personal blog where I share my learnings, experiences, and thoughts on different topics. I mostly talk about tech, but I don't have any specific niche.  I write about whatever I find interesting. I hope you will find my blogs helpful. Happy reading!</subtitle>
+    <logo>https://dev.gxuri.in/logo.png</logo>
+    <icon>https://dev.gxuri.in/favicon.png</icon>
+    <rights>All rights reserved 2024, Gxuri</rights>
 </feed>
