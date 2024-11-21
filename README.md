@@ -2,7 +2,7 @@
 
 ## Demo
 
-You can check the live demo of this website [rdsx.dev![rdsx.dev](.github/assets/preview.png)](https://rdsx.dev)
+You can check the live demo of this website [dev.gxuri.in](https://dev.gxuri.in)
 
 ## Features
 
@@ -84,36 +84,6 @@ Read the [velite docs](https://velite.js.org/guide/quick-start) for more informa
 - Configure page SEO generation in their respective pages in `src/app`
 - Configure sitemap file in `src/app/sitemap.ts`.
 - Configure browser crawlable routes in `src/app/robots.ts`.
-
-## RSS generation
-
-Configure rss feed generation script in `rss.ts`. You can update `description` and other parameters.
-
-To generate rss feed, run the following command:
-
-```bash
-bun run rss:build
-```
-
-It will generate `rss.xml`, `rss.json` & `atom.xml` in your `public` directory.
-
-Your default rss feed will be available at `/rss.xml` or `/rss.json` or `/atom.xml`.
-To configure custom rss feed path, update `next.config.mjs` file. Currently, it's set to `/feed`.
-
-```ts
-const nextConfig = {
-  // ...
-  async rewrites() {
-    return [
-      {
-        source: '/feed',
-        destination: '/rss.xml',
-      },
-    ]
-  },
-  // ...
-};
-```
 
 ## Analytics Integration
 
