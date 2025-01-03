@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     shortcut: "/favicon-16x16.png",
     apple: "/apple-touch-icon.png",
   },
-  // OpenGraph metadata
+
   openGraph: {
     title: siteConfig.title,
     description: siteConfig.description,
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     locale: "en_US",
   },
 
-  // Twitter metadata
+
   twitter: {
     card: "summary_large_image",
     site: siteConfig.creator.url,
