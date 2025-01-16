@@ -4,6 +4,10 @@
 
 You can check the live demo of this website [dev.gxuri.in](https://dev.gxuri.in)
 
+
+![theme-toggle](./assets/dev.gif)
+
+
 ## Features
 
 - MDX blog posts
@@ -26,7 +30,6 @@ You can check the live demo of this website [dev.gxuri.in](https://dev.gxuri.in)
 - **Content**: MDX
 - **Content Management**: Github
 - **Content Generation**: [Velite](https://velite.js.org/)
-- **RSS Generation**: [feed](https://github.com/jpmonette/feed)
 - **Deployment**: Vercel
 - **Analytics**: Vercel Analytics, Vercel Speed Analytics
 
@@ -109,10 +112,5 @@ export default function RootLayout(...) {
 
 ## Deployment
 
-The easiest way to deploy this website is to use Vercel. You can deploy it with a single click using the button below:
+The easiest way to deploy this website is to use Vercel. 
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/rudrodip/rdsx.dev)
-
-## License
-
-[GNU AFFERO GENERAL PUBLIC LICENSE](LICENSE)
