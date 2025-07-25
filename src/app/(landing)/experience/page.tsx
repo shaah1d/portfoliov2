@@ -6,7 +6,7 @@ import { siteConfig } from "@/config/site.config";
 export async function generateMetadata(): Promise<Metadata> {
   const description = `Hey, I'm ${
     siteConfig.creator.name
-  }. I've worked with a variety of companies and have experience in different roles. I've also made a few projects on my own. Here's a list of my work experience.
+  }. I've worked with a company and many projects with other fellow developers, Here are some of the ones I have worked on recently.
     ${experiencesConfig
       .map((exp) => {
         return `${exp.title} at ${exp.company.name}.`;

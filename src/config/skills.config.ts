@@ -4,70 +4,52 @@ export const skillsConfig = [
     technologies: [
       "React",
       "Next.js",
-      "TailwindCSS",
-      "SCSS",
-      "Headless UI",
-      "ShadCN UI",
-      "Framer motion",
-      "GSAP",
-      "Redux",
-      "Recoil",
-      "Zustand",
-      "SWR",
-      "Tanstack Query",
-      "Tanstack Router",
-      "React Hook Form",
-      "clerk",
-      "NextAuth",
-
-    ],
-  },
-  {
-    category: "Javascript runtime",
-    technologies: [
-      "Node.js",
-      "Bun",
-      "Deno"
+      "React Native",
+      "TailwindCSS", 
     ],
   },
   {
     category: "Backend",
     technologies: [
-      "Express.js",
-      "Fastapi",
-      "Flask",
-      "Go",
+      "Node.js",
+      "Express",
+      "Prisma",
     ],
   },
   {
     category: "Database",
     technologies: [
-      "MySQL",
       "MongoDB",
-      "DynamoDB",
-      "PostgreSQL",
-      "Redis",
     ],
   },
   {
-    category: "Cloud",
+    category: "Fullstack",
     technologies: [
-      "AWS Certified",
+      "MERN Stack",
+      "TypeScript",
+    ],
+  },
+  {
+    category: "DevOps",
+    technologies: [
+      "Git",
       "Vercel",
-      "Cloudflare",
-      "Firebase",
+    ],
+  },
+  {
+    category: "AI / ML",
+    technologies: [
+      "AI RAG",
+      "Vector Embeddings",
+      "Pinecone",
     ],
   },
   {
     category: "Web3",
     technologies: [
-      "Solana/web3.js",
-      "Solana Wallet Provider",
-      "Ethers.js",
+       "Solidity",
+       "Ethereum",
+        "Smart Contracts",
     ],
-  },
-  {
-    category: "Firmware",
-    technologies: ["C", "C++", "Rust", "Python"],
   },
 ];

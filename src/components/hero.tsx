@@ -6,8 +6,20 @@ import ThemeToggler from "@/components/theme/theme-toggler";
 import { Rss } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { skillsConfig } from "@/config/skills.config";
+import {
+  Glimpse,
+  GlimpseContent,
+  GlimpseDescription,
+  GlimpseImage,
+  GlimpseTitle,
+  GlimpseTrigger,
+} from '@/components/ui/kibo-ui/glimpse';
+import { glimpse } from '@/components/ui/kibo-ui/glimpse/server';
 
-export default function Hero() {
+
+export default async function Hero() {
+    const data = await glimpse('https://kuesuto.vercel.app/');
+
   return (
     <section className="w-full flex flex-col lg:min-h-[calc(100vh-7rem)]">
       <Link href="/">
@@ -30,24 +42,33 @@ export default function Hero() {
         {portfolioConfig.tagline} <span className="sr-only">tagline</span>
       </h3>
       <p className="my-6 max-w-2xl text-foreground/80">
-        Hey there 👋 I&apos;m Gurvinder Singh a.k.a Gxuri - I don&apos;t have a niche, I&apos;m a{" "}
-        <a
-          href="#"
-          className="text-foreground font-semibold hover:underline"
-        >
-          generalist
-        </a>. I work on web, mobile, desktop, server, embedded systems, IoT, blockchain, applied AI.
-        I&apos;ve worked with clients like{" "}
-        <a
-          href="https://apple.com"
-          target="_blank"
-          className="text-foreground font-semibold hover:underline"
-        >
-          Apple Inc.
-        </a>.
-         I love Modern UI/UX, Computer Science, and creating elegant solutions to complex problems.
-        <span className="sr-only">bio</span>
-      </p>
+  Hey 👋 I&apos;m Shaahid Shaikh — online I go by{" "}
+  <span className="text-foreground font-semibold">shaah1d</span>. I&apos;m a{" "}
+  <a href="#" className="text-foreground font-semibold hover:underline">
+    full-stack generalist
+  </a>{" "}
+  who builds with web, AI, blockchain systems.
+  I&apos;ve shipped projects like{" "}
+  <Glimpse closeDelay={0} openDelay={0}>
+        <GlimpseTrigger asChild>
+          <a
+            className="font-medium text-primary underline"
+            href="https://github.com/shaah1d/Kuesuto"
+          >
+            Kuesuto
+          </a>
+        </GlimpseTrigger>
+        <GlimpseContent className="w-80">
+          <GlimpseImage src={data.image ?? ''} />
+          <GlimpseTitle>{data.title}</GlimpseTitle>
+          <GlimpseDescription>{data.description}</GlimpseDescription>
+        </GlimpseContent>
+      </Glimpse>{' '}
+  (an AI quiz generator), a no-code AI builder, and a provably fair decentralized raffle.
+  I care about performance, modern UI, and solving real-world problems with elegant code.
+  <span className="sr-only">bio</span>
+</p>
+
       <Socials />
       <div className="hidden md:flex flex-col text-sm space-y-2 rounded max-w-2xl text-foreground/70 my-7">
         {skillsConfig.map((skill) => (

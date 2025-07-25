@@ -1,8 +1,8 @@
 import type { Site } from "@/types";
 
 export const siteConfig: Site = {
-  name: "dev.gxuri.in",
-  title: "Gxuri | Bringing Ideas to Reality ✨",
+  name: "shaah1d.vercel.app",
+  title: "shaah1d",
   description: "Hi, I'm Gxuri - Got ideas you are itching to bring to life? Let's collaborate and make it happen!",
   keywords: [
     "gurvinder singh",

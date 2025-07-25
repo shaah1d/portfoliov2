@@ -27,7 +27,7 @@ import { getRepos } from "@/components/project/action";
 const schema = z.object({
   query: z.string().min(1, "Search is required"),
   type: z.enum(["Featured", "Github"]).default("Featured"),
-  sort: z.enum(["Last updated", "Stars"]).default("Stars"),
+  sort: z.enum(["Last updated", "Stars"]).default("Last updated"),
 });
 
 export default function Home() {
@@ -39,7 +39,7 @@ export default function Home() {
     defaultValues: {
       query: "",
       type: "Featured",
-      sort: "Stars",
+      sort: "Last updated",
     },
   });
 

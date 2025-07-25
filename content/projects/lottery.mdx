@@ -1,0 +1,84 @@
+---
+title: Lottery - Decentralized Raffle System
+description: Decentralized Raffle is a provably fair lottery system built on Ethereum, leveraging Chainlink VRF for secure randomness and Chainlink Automation for automated winner selection.
+tags: ["Solidity", "Ethereum", "Chainlink VRF", "Chainlink Automation", "Foundry"]
+date: 2025-07-25
+image: "./assets/raffle/raffle-dark.png"
+imageDark: "./assets/raffle/raffle-dark.png"
+links:
+  [
+    { name: "GitHub", url: "https://github.com/shaah1d/lottery-solidity" },
+    { name: "Website", url: "https://shaah1d.vercel.app" },
+    { name: "Twitter", url: "https://twitter.com/shaah1d" },
+    { name: "YouTube", url: "https://shaah1d.vercel.app" },
+    { name: "LinkedIn", url: "https://shaah1d.vercel.app"},
+  ]
+---
+
+## What is Decentralized Raffle?
+
+<br />
+
+
+## Introduction
+
+Decentralized Raffle is a blockchain-based lottery system built on Ethereum, designed to provide a transparent and provably fair experience for participants. By integrating **Chainlink VRF v2** for cryptographically secure random number generation and **Chainlink Automation** for automated execution, this project ensures trustless winner selection without manual intervention. Deployed using Foundry, the smart contract offers robust security features and a seamless user experience for entering raffles and claiming prizes.
+
+## Features
+
+1. **Provably Fair Randomness**: Utilizes Chainlink VRF v2 to generate cryptographically secure random numbers, ensuring unbiased winner selection with on-chain verifiable proof.
+2. **Automated Execution**: Chainlink Automation triggers raffle completion based on time intervals, eliminating the need for manual intervention.
+3. **Transparent Prize Pool**: All entrance fees are collected in the contract, and the entire balance is awarded to the winner.
+4. **Secure State Management**:
+   - Two states: `OPEN` (accepting entries) and `CALCULATING` (processing winner).
+   - Prevents entries during winner calculation for integrity.
+5. **User-Friendly Interaction**:
+   - Simple entry process with a fixed entrance fee.
+   - Events emitted for raffle entry and winner selection for easy tracking.
+6. **Robust Security**:
+   - Reentrancy protection through state updates before external calls.
+   - Custom error handling for clear failure reporting.
+   - Gas-optimized design with immutable variables.
+7. **Testing and Coverage**: Comprehensive test suite using Foundry, covering key functionalities like entry, upkeep, and winner selection.
+
+#### User Workflow
+
+1. Users connect their Ethereum wallet (e.g., MetaMask) to the raffle frontend.
+2. Users pay the entrance fee in ETH to enter the raffle via the `enterRaffle()` function.
+3. Chainlink Automation monitors the contract and triggers `performUpkeep()` when the raffle interval elapses and conditions are met.
+4. Chainlink VRF generates a random number, and the contract selects a winner via `fulfillRandomWords()`.
+5. The prize pool is automatically transferred to the winner’s address.
+6. Users can view the recent winner, raffle state, and participant list through the frontend.
+7. The raffle resets automatically for the next round.
+
+
+#### Tech Stack
+
+- **Solidity ^0.8.18**: Smart contract development for Ethereum.
+- **Foundry**: Development framework for testing, deployment, and coverage analysis.
+- **Chainlink VRF v2**: Provides verifiable random number generation.
+- **Chainlink Automation**: Automates raffle execution based on time triggers.
+- **React & Tailwind CSS**: Frontend for user interaction (optional, as per previous response).
+- **ethers.js**: JavaScript library for blockchain interaction.
+
+## Open-Source and Transparent
+
+Decentralized Raffle is an open-source project, fully transparent on the Ethereum blockchain. All transactions, random number generation, and winner selections are verifiable on-chain, ensuring trust and fairness. The project is freely accessible for developers to fork, audit, or extend.
+
+## Get Involved
+
+We welcome contributions to enhance the Decentralized Raffle ecosystem. Whether you're a blockchain developer, smart contract auditor, or UI/UX designer, you can contribute by:
+
+- Improving test coverage (currently at 56.67% lines, as per `coverage.txt`).
+- Adding new features like multi-winner raffles or dynamic entrance fees.
+- Enhancing the frontend for better user experience.
+
+Visit our [GitHub repository](https://github.com/shaah1d/lottery-solidity) to explore the codebase, report issues, or submit pull requests.
+
+## Stay Connected
+
+Follow the project for updates and announcements:
+
+- X: [@shaah1d](https://x.com/shaah1d)
+- LinkedIn: [shaah1d](https://shaah1d.vercel.app)
+---

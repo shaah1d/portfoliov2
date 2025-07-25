@@ -5,7 +5,7 @@ import { Octokit } from "octokit";
 export async function getRepos() {
   const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
   const repos = await octokit.rest.repos.listForUser({
-    username: "Gurvinder-Singh02",
+    username: "shaah1d",
     per_page: 100,
     type: "owner",
     direction: "desc",

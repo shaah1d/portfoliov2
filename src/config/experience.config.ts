@@ -2,42 +2,41 @@ import type { Experience } from "@/types";
 
 export const experiencesConfig: Experience[] = [
   {
-    title: "Freelance Developer",
-    employmentType: "Freelance",
+    title: "WebDeveloper Developer",
+    employmentType: "Project",
     company: {
-      name: "Self-employed",
+      name: "NoCode Model Builder",
       url: "#",
     },
     location: {
       name: "Remote",
     }, 
-    start: "December 2024",
-    end: "Present",
-    description: [
-      "Developed custom web applications and e-commerce solutions for multiple clients",
-      "Built responsive websites using React, Next.js and modern frontend technologies",
-      "Provided technical consulting and solutions architecture for small businesses",
-      "Tech: React, Next.js, TypeScript, Node.js, MongoDB, Tailwind , Framer Motion, AWS"
-    ],
+    start: "February 2025",
+    end: "April 2025",
+   description: [
+"Developed a no-code AI platform for automated dataset preprocessing and ML model training",
+"Built a responsive web interface using Next.js, TypeScript, and Tailwind CSS",
+"Integrated FastAPI backend for exploratory data analysis and model optimization",
+"Tech: Next.js, TypeScript, React, FastAPI, Python, scikit-learn, Tailwind CSS, Chart.js"
+]
   },
   {
-    title: "Software Engineer",
-    employmentType: "Full time",
+    title: "Full Stack Developer",
+    employmentType: "Freelance",
     company: {
-      name: "RMSI (Client - Apple Inc) ",
-      url: "https://radicalhealth.care",
+      name: "YuvaHR Services ",
+      url: "https://www.yuvahr.com/",
     },
     location: {
       name: "Remote",
     },
-    start: "October 2023",
-    end: "December 2024",
-    description: [
-      "Engineered API for Apple Maps data translation & validation using Node.js/Express/MySQL",
-      "Built data visualization tool with React/AWS for digitization analysis",
-      "Led NextJS POC initiatives demonstrating scalable solutions",
-      "Tech: NodeJS, Express, MySQL, NextJS, TypeScript, React, Tailwind, AWS"
-    ],
+    start: "August 2024",
+    end: "September 2024",
+   description: [
+"Built a responsive web app for YuvaHR to connect IT professionals with companies",
+"Used React, Next.js, and Material-UI for the frontend, Express.js for the backend",
+"Tech: React, Next.js, Material-UI, Express.js, Nodemailer, Vercel"
+]
   },
   
 ];
