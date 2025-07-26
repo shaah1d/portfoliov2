@@ -9,10 +9,10 @@ export const navbarConfig: NavItem[] = [
     title: "Experience",
     url: "/experience"
   },
-  {
-    title: "TIL",
-    url: "/til"
-  },
+  // {
+  //   title: "TIL",
+  //   url: "/til"
+  // },
   {
     title: "Blogs",
     url: "/blogs",
