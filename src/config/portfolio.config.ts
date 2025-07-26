@@ -9,6 +9,6 @@ export const portfolioConfig: Portfolio = {
     twitter: "https://x.com/shaah1d",
     mail: "mailto:writetoshaahid@gmail.com",
     discord: "https://discordapp.com/#",
-    linkedin: "https://linkedin.com/in/gurvindersingh02",
+     linkedin: "https://linkedin.com/in/shaahid14",
   }
 }
