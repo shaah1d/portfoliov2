@@ -1,0 +1,173 @@
+---
+title: Understanding AI-Powered Retrieval-Augmented Generation (RAG)
+author: Shaahid
+date: 2025-07-27
+description: A deep dive into how Retrieval-Augmented Generation (RAG) works, with a practical example from my AI-powered portfolio website built with Next.js, LangChain, and Supabase.
+image: "./assets/rag/raglanding.jpg"
+imageDark: "./assets/rag/raglanding.jpg"
+tags: [AI, RAG, Next.js, LangChain, Supabase, Portfolio, Web Development]
+---
+
+
+# Understanding AI-Powered Retrieval-Augmented Generation (RAG): A Deep Dive with a Portfolio Example
+
+Retrieval-Augmented Generation (RAG) is transforming how AI systems deliver contextually rich and accurate responses by combining the power of large language models (LLMs) with external knowledge retrieval. In this blog, I’ll explain how RAG works, its benefits, and walk you through a practical example from my AI-powered portfolio website, which uses RAG to answer questions based on my resume. Whether you’re a developer, AI enthusiast, or curious learner, this post will break down the mechanics of RAG and showcase its real-world application.
+
+## What is Retrieval-Augmented Generation (RAG)?
+
+RAG is a hybrid approach that enhances LLMs by integrating external data retrieval with text generation. Unlike traditional LLMs that rely solely on their pre-trained knowledge, RAG fetches relevant information from a specific dataset (e.g., documents, databases) and uses it to craft precise, context-aware responses. This makes RAG ideal for applications requiring tailored answers, such as customer support bots, knowledge bases, or, in my case, an interactive portfolio.
+
+### How RAG Works
+
+
+RAG operates in two main phases: **Retrieval** and **Generation**.
+
+1. **Retrieval Phase**:
+   - A user submits a query (e.g., “What are Shaahid’s skills?”).
+   - The query is converted into a **vector embedding** (a numerical representation) using an embedding model like OpenAI’s embeddings.
+   - These embeddings are compared to a pre-indexed database of document embeddings using a similarity metric (e.g., cosine similarity).
+   - The most relevant document chunks are retrieved based on their proximity to the query embedding.
+   <img src="./assets/rag/retrival.svg" alt="Retrieval Phase" className="w-[300px] max-h-[200px] mx-auto my-4" />
+
+2. **Generation Phase**:
+   - The retrieved document chunks are combined with the user’s query and fed into an LLM (e.g., OpenAI’s ChatGPT).
+   - The LLM generates a coherent, contextually relevant response, leveraging both the retrieved data and its language understanding capabilities.
+
+### Why Use RAG?
+
+RAG addresses key limitations of traditional LLMs:
+- **Contextual Accuracy**: By retrieving specific data, RAG ensures responses are grounded in relevant information, reducing the risk of “hallucination” (making up answers).
+- **Customizability**: It allows developers to train models on domain-specific datasets, making it versatile for niche applications.
+- **Scalability**: RAG can handle large datasets, as only relevant chunks are retrieved, keeping processing efficient.
+- **Up-to-date Information**: External data sources can be updated without retraining the LLM, ensuring fresh responses.
+
+## A Real-World Example: My AI-Powered Portfolio
+
+To illustrate RAG in action, let’s explore my old portfolio website, a Next.js application that uses RAG to answer questions about my skills, projects, and experiences based on my resume. The project integrates **LangChain**, **Supabase**, and **OpenAI** to create an interactive, conversational interface. Here’s how it works, with a focus on the RAG implementation.
+
+### Project Overview
+
+The portfolio allows users to ask questions (e.g., “What projects has Shaahid worked on?”) through a form (`QuestionPrompt.tsx`). The system retrieves relevant sections from my resume, stored as a text file (`word.txt`), and generates a response using RAG. The response is displayed and converted to audio using OpenAI’s text-to-speech API for an engaging user experience.
+
+### RAG Implementation in the Portfolio
+
+The RAG pipeline is implemented in `src/app/api/chain/route.ts`. Here’s a step-by-step breakdown:
+
+1. **Resume Processing**:
+   - My resume, stored in `public/word.txt`, contains details about my skills, projects (e.g., *Nostalgia*, *Kuesuto*), and experiences.
+   - The resume is split into smaller chunks using **LangChain**’s text-splitting utilities. This ensures manageable pieces for embedding and retrieval.
+   - Each chunk is converted into a vector embedding using **OpenAIEmbeddings** and stored in a **Supabase** vector database (table: `documents`, query: `match_documents`).
+  <img src="./assets/rag/resumepreprocessing.svg" alt="Resume Preprocessing Phase" className="w-[300px] max-h-[200px] mx-auto my-4" />
+
+
+
+2. **Retrieval Pipeline**:
+   - When a user submits a question via `QuestionPrompt.tsx`, it’s sent to the `/api/chain` endpoint as a JSON payload.
+   - The question is converted into a standalone query using a **PromptTemplate** (`standAloneQuestionTemplate`) and processed by **ChatOpenAI** to ensure clarity.
+   - The standalone query is embedded and compared to the resume’s vector embeddings in Supabase using **SupabaseVectorStore**. The most relevant chunks are retrieved based on cosine similarity.
+   <img src="./assets/rag/input.svg" alt="Input Process" className="max-w-sm mx-auto my-4" />
+
+3. **Generation Pipeline**:
+   - The retrieved resume chunks are combined into a single context string using a custom `combineDocuments` function.
+   - A second **PromptTemplate** (`answerTemplate`) instructs the LLM to answer as me (Shaahid) in a polite, professional tone, using only the provided context. For example:
+   
+ 
+     ```plaintext
+     You are Shaahid and you have to answer all the questions in first person based on the context provided to you...
+     context: {context}
+     question: {question}
+     answer:
+     ```
+    
+     If youre having issues seeing the text in the above box try changing the theme to light mode.
+   - The **ChatOpenAI** model generates a response, which is parsed into a string using **StringOutputParser**.
+    <img src="./assets/rag/answer.svg" alt="Answer Generation" className="max-w-sm mx-auto my-4" />
+
+4. **Response Delivery**:
+   - The generated response is returned to the frontend (`Firstchain.tsx`) and displayed to the user.
+   - Simultaneously, the response is sent to `/api/speech`, where **OpenAI’s tts-1** model (voice: `echo`) converts it to audio, played via an `<audio>` element in `speech.tsx`.
+
+### Code Example
+
+Here’s a simplified version of the RAG chain from `src/app/api/chain/route.ts`:
+
+```typescript
+import { NextResponse } from 'next/server';
+import { ChatOpenAI, OpenAIEmbeddings } from '@langchain/openai';
+import { PromptTemplate } from '@langchain/core/prompts';
+import { SupabaseVectorStore } from '@langchain/community/vectorstores/supabase';
+import { StringOutputParser } from '@langchain/core/output_parsers';
+import { createClient } from '@supabase/supabase-js';
+import { RunnableSequence } from '@langchain/core/runnables';
+
+const combineDocuments = (docs) => docs.map(doc => doc.pageContent).join('\n\n');
+
+export async function POST(request) {
+  try {
+    const { question } = await request.json();
+    if (!question) return NextResponse.json({ error: 'Question is required' }, { status: 400 });
+
+    const client = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
+    const embeddings = new OpenAIEmbeddings({ openAIApiKey: process.env.OPEN_AI_API_KEY });
+    const vectorStore = new SupabaseVectorStore(embeddings, { client, tableName: 'documents', queryName: 'match_documents' });
+
+    const llm = new ChatOpenAI({ openAIApiKey: process.env.OPEN_AI_API_KEY });
+    const standaloneQuestionPrompt = PromptTemplate.fromTemplate('Given a question, convert it to a standalone question. question: {question}');
+    const answerPrompt = PromptTemplate.fromTemplate('You are Shaahid... context: {context}\nquestion: {question}\nanswer:');
+
+    const standaloneQuestionChain = standaloneQuestionPrompt.pipe(llm).pipe(new StringOutputParser());
+    const retrieverChain = RunnableSequence.from([
+      prevResult => prevResult.standalone_question,
+      vectorStore.asRetriever(),
+      combineDocuments,
+    ]);
+    const answerChain = answerPrompt.pipe(llm).pipe(new StringOutputParser());
+
+    const chain = RunnableSequence.from([
+      { standalone_question: standaloneQuestionChain, original_input: new RunnablePassthrough() },
+      { context: retrieverChain, question: ({ original_input }) => original_input.question },
+      answerChain,
+    ]);
+
+    const response = await chain.invoke({ question });
+    return NextResponse.json({ success: true, response });
+  } catch (error) {
+    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+  }
+}
+```
+
+### User Experience
+
+The frontend, built with **Next.js** and **Tailwind CSS**, ensures a seamless experience:
+- **Navbar.jsx**: Provides links to my GitHub, Twitter, email, and a downloadable resume.
+- **QuestionPrompt.tsx**: A form where users input questions, validated using **React Hook Form** and **Zod**.
+- **Firstchain.tsx**: Displays the RAG-generated response and a welcome message.
+- **speech.tsx**: Converts responses to audio, with a loading animation for visual feedback.
+
+### Challenges and Solutions
+
+1. **Efficient Retrieval**: Splitting the resume into optimal chunks was critical to balance retrieval accuracy and performance. LangChain’s text-splitting utilities helped achieve this.
+2. **Contextual Integrity**: Ensuring the LLM answers only based on resume data (no hallucination) required a strict prompt template and validation checks.
+3. **Scalability**: Using Supabase for vector storage ensured efficient scaling as the resume data grows.
+4. **User Experience**: Integrating text-to-speech and a responsive UI (with Tailwind and DaisyUI) made the portfolio engaging and accessible.
+
+## Benefits of RAG in the Portfolio
+
+- **Personalized Responses**: Users can ask specific questions (e.g., “What is Nostalgia?”) and get tailored answers based on my resume.
+- **No Hallucination**: The LLM is constrained to the resume context, ensuring accurate and professional responses.
+- **Interactive Experience**: The text-to-speech feature adds a unique, conversational touch, making the portfolio stand out.
+- **Scalability**: The Supabase backend allows easy updates to the resume without retraining the model.
+
+## Broader Applications of RAG
+
+Beyond my portfolio, RAG has vast potential:
+- **Customer Support**: Chatbots can retrieve company policies or FAQs to answer user queries accurately.
+- **Education**: Platforms like my *Kuesuto* project use RAG to generate personalized quizzes from educational content.
+- **Knowledge Management**: Enterprises can build internal knowledge bases where employees query documents for instant answers.
+
+## Conclusion
+
+RAG is a game-changer for building intelligent, context-aware AI applications. My portfolio demonstrates how RAG, combined with modern web technologies like Next.js and Supabase, can create a dynamic and engaging user experience. By training a model on my resume, I’ve built a tool that not only showcases my skills but also highlights my ability to integrate cutting-edge AI into practical applications. I hope this inspires you to explore RAG for your own projects!
+
+Check out the source code for my portfolio on [GitHub](https://github.com/shaah1d/portfolio) or reach out to me at [writetoshaahid@gmail.com](mailto:writetoshaahid@gmail.com) to discuss RAG, AI, or potential collaborations. Happy coding!
