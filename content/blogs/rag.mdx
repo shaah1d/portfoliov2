@@ -9,13 +9,20 @@ tags: [AI, RAG, Next.js, LangChain, Supabase, Portfolio, Web Development]
 ---
 
 
-# Understanding AI-Powered Retrieval-Augmented Generation (RAG): A Deep Dive with a Portfolio Example
+# Introduction
 
-Retrieval-Augmented Generation (RAG) is transforming how AI systems deliver contextually rich and accurate responses by combining the power of large language models (LLMs) with external knowledge retrieval. In this blog, I’ll explain how RAG works, its benefits, and walk you through a practical example from my AI-powered portfolio website, which uses RAG to answer questions based on my resume. Whether you’re a developer, AI enthusiast, or curious learner, this post will break down the mechanics of RAG and showcase its real-world application.
+Imagine if an AI could answer your questions not just from what it was trained on, but also from fresh, real-time information—like your resume, notes, or even a database. That’s the promise of Retrieval-Augmented Generation (RAG), a method that bridges the gap between static AI models and dynamic, up-to-date knowledge.
+
+In this post, we’ll explore how RAG works in plain language, why it’s useful, and how I used it to create my old [portfolio website](https://shaah1d-v0.vercel.app/) that can answer questions about my experience. No technical deep-dives required—just an intuitive understanding of the power behind this approach.
+
+
 
 ## What is Retrieval-Augmented Generation (RAG)?
 
-RAG is a hybrid approach that enhances LLMs by integrating external data retrieval with text generation. Unlike traditional LLMs that rely solely on their pre-trained knowledge, RAG fetches relevant information from a specific dataset (e.g., documents, databases) and uses it to craft precise, context-aware responses. This makes RAG ideal for applications requiring tailored answers, such as customer support bots, knowledge bases, or, in my case, an interactive portfolio.
+Retrieval-Augmented Generation (RAG) is a way to supercharge language models like ChatGPT by letting them look things up before answering. Traditional AI models rely on what they learned during training, which means they can miss recent or context-specific information. RAG fixes this by giving the model access to an external source of truth.
+
+Think of it like this: if you’re asked a question about a specific book, you might first flip through the book to find the answer instead of relying on memory alone. That’s exactly what RAG does.
+
 
 ### How RAG Works
 
@@ -24,10 +31,10 @@ RAG operates in two main phases: **Retrieval** and **Generation**.
 
 1. **Retrieval Phase**:
    - A user submits a query (e.g., “What are Shaahid’s skills?”).
-   - The query is converted into a **vector embedding** (a numerical representation) using an embedding model like OpenAI’s embeddings.
-   - These embeddings are compared to a pre-indexed database of document embeddings using a similarity metric (e.g., cosine similarity).
+   - The query is converted into a [vector embedding](https://www.pinecone.io/learn/vector-embeddings/) using an embedding model like OpenAI’s embeddings.
+   - These embeddings are compared to a pre-indexed database of document embeddings using a [cosine similarity](https://en.wikipedia.org/wiki/Cosine_similarity).
    - The most relevant document chunks are retrieved based on their proximity to the query embedding.
-   <img src="./assets/rag/retrival.svg" alt="Retrieval Phase" className="w-[300px] max-h-[200px] mx-auto my-4" />
+   
 
 2. **Generation Phase**:
    - The retrieved document chunks are combined with the user’s query and fed into an LLM (e.g., OpenAI’s ChatGPT).
@@ -57,15 +64,12 @@ The RAG pipeline is implemented in `src/app/api/chain/route.ts`. Here’s a step
    - My resume, stored in `public/word.txt`, contains details about my skills, projects (e.g., *Nostalgia*, *Kuesuto*), and experiences.
    - The resume is split into smaller chunks using **LangChain**’s text-splitting utilities. This ensures manageable pieces for embedding and retrieval.
    - Each chunk is converted into a vector embedding using **OpenAIEmbeddings** and stored in a **Supabase** vector database (table: `documents`, query: `match_documents`).
-  <img src="./assets/rag/resumepreprocessing.svg" alt="Resume Preprocessing Phase" className="w-[300px] max-h-[200px] mx-auto my-4" />
-
-
 
 2. **Retrieval Pipeline**:
    - When a user submits a question via `QuestionPrompt.tsx`, it’s sent to the `/api/chain` endpoint as a JSON payload.
    - The question is converted into a standalone query using a **PromptTemplate** (`standAloneQuestionTemplate`) and processed by **ChatOpenAI** to ensure clarity.
    - The standalone query is embedded and compared to the resume’s vector embeddings in Supabase using **SupabaseVectorStore**. The most relevant chunks are retrieved based on cosine similarity.
-   <img src="./assets/rag/input.svg" alt="Input Process" className="max-w-sm mx-auto my-4" />
+  
 
 3. **Generation Pipeline**:
    - The retrieved resume chunks are combined into a single context string using a custom `combineDocuments` function.
@@ -81,7 +85,7 @@ The RAG pipeline is implemented in `src/app/api/chain/route.ts`. Here’s a step
     
      If youre having issues seeing the text in the above box try changing the theme to light mode.
    - The **ChatOpenAI** model generates a response, which is parsed into a string using **StringOutputParser**.
-    <img src="./assets/rag/answer.svg" alt="Answer Generation" className="max-w-sm mx-auto my-4" />
+   
 
 4. **Response Delivery**:
    - The generated response is returned to the frontend (`Firstchain.tsx`) and displayed to the user.
