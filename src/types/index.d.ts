@@ -24,7 +24,7 @@ export type Portfolio = {
     github: string;
     linkedin: string;
     mail: string;
-    discord: string;
+    medium: string;
   }
 }
 
