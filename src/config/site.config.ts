@@ -1,7 +1,7 @@
 import type { Site } from "@/types";
 
 export const siteConfig: Site = {
-  name: "shaah1d.vercel.app",
+  name: "shaahid.xyz",
   title: "shaah1d",
   description: "Hi!, I am Shaahid, and I develop FullStack Web Applications using Nextjs and I also write smart contracts",
   keywords: [

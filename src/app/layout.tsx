@@ -6,7 +6,7 @@ import localFont from "next/font/local";
 import { siteConfig } from "@/config/site.config";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Analytics } from "@vercel/analytics/react";
+
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 
@@ -80,7 +80,7 @@ export default function RootLayout({
           GeistMono.variable
         )}
       >
-        <Analytics />
+      
         <SpeedInsights />
         <ThemeProvider attribute="class" defaultTheme="light">
           {children}
